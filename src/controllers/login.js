@@ -1,8 +1,6 @@
-const jwt = require('jsonwebtoken');
 const { errorMap, httpStatusCode } = require('../utils');
 const services = require('../services');
-
-const secretKey = process.env.JWT_SECRET;
+const { createToken } = require('../auth');
 
 module.exports = async (req, res) => {
   const { email, password } = req.body;
@@ -12,12 +10,9 @@ module.exports = async (req, res) => {
 
   if (!message) return res.status(errorMap.mapError(type)).json({ message });
 
-  const jwtConfig = {
-    expiresIn: '1h',
-    algorithm: 'HS256',
-  };
+  const { password: _, ...userWithoutPassword } = message.dataValues;
 
-  const token = jwt.sign({ data: { email } }, secretKey, jwtConfig);
+  const token = createToken(userWithoutPassword);
 
   return res.status(httpStatusCode.OK).json({ token });
 };
