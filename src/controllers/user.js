@@ -1,6 +1,6 @@
 const { errorMap, httpStatusCode } = require('../utils');
 const { userService } = require('../services');
-const { createToken } = require('../auth');
+const { createToken } = require('../auth/jsonWebToken');
 
 const createUser = async (req, res) => {
   const { type, message } = await userService.createUser(req.body);

@@ -1,19 +1,24 @@
 const { User } = require('../models');
-require('express-async-errors');
 const validateInputsValue = require('./validations/validateInputsValue');
 
 module.exports = async (email, password) => {
-  const { type, message } = validateInputsValue.login(email, password);
-  if (type) return { type, message };
+  try {
+    const { type, message } = validateInputsValue.login(email, password);
+    if (type) return { type, message };
 
-  const user = await User.findOne({
-    where: {
-      email,
-      password,
-    },
-  });
+    const user = await User.findOne({
+      where: {
+        email,
+        password,
+      },
+    });
 
-  if (!user) return { type: 'BAD_REQUEST', message: 'Invalid fields' };
+    if (!user) return { type: 'BAD_REQUEST', message: 'Invalid fields' };
 
-  return { type: null, message: user };
+    return { type: null, message: user };
+  } catch (error) {
+    console.error(error.message);
+
+    return { type: 'SERVER_ERROR', message: 'unexpected error' };
+  }
 };

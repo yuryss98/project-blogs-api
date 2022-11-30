@@ -1,6 +1,5 @@
 const { User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
-require('express-async-errors');
 
 const createUser = async (newUser) => {
   try {

@@ -1,6 +1,6 @@
 const { errorMap, httpStatusCode } = require('../utils');
 const { loginService } = require('../services');
-const { createToken } = require('../auth');
+const { createToken } = require('../auth/jsonWebToken');
 
 module.exports = async (req, res) => {
   const { email, password } = req.body;
