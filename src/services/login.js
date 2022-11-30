@@ -1,9 +1,9 @@
 const { User } = require('../models');
 require('express-async-errors');
-const validations = require('./validations/validateInputsValue');
+const validateInputsValue = require('./validations/validateInputsValue');
 
 module.exports = async (email, password) => {
-  const { type, message } = validations.validateInputValues(email, password);
+  const { type, message } = validateInputsValue.login(email, password);
   if (type) return { type, message };
 
   const user = await User.findOne({

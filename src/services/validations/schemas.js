@@ -9,6 +9,14 @@ const loginSchema = Joi.object({
   'string.base': '{#label} must be the type text',
 });
 
+const createUserSchema = Joi.object({
+  displayName: Joi.string().min(8).required(),
+  email: Joi.string().email().min(1).required(),
+  password: Joi.string().min(6).required(),
+  image: Joi.string(),
+});
+
 module.exports = {
   loginSchema,
+  createUserSchema,
 };

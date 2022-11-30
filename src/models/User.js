@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 
     password: DataTypes.STRING,
 
-    image: DataTypes.DATE,
+    image: DataTypes.STRING,
   }, {
     timestamps: false,
     underscored: true, 

@@ -1,15 +1,18 @@
-// const { errorMap, httpStatusCode } = require('../utils');
-// const services = require('../services');
+const { errorMap, httpStatusCode } = require('../utils');
+const { userService } = require('../services');
+const { createToken } = require('../auth');
 
-// const secretKey = process.env.JWT_SECRET;
+const createUser = async (req, res) => {
+  const { type, message } = await userService.createUser(req.body);
+  if (type) return res.status(errorMap.mapError(type)).json({ message });
 
-// module.exports = async (req, res) => {
-//   const { email, password } = req.body;
+  const { password: _, ...userWithoutPassword } = message.dataValues;
 
-//   const { type, message } = await services.login(email, password);
-//   if (type) return res.status(errorMap.mapError(type)).json({ message });
+  const token = createToken(userWithoutPassword);
 
-//   if (!message) return res.status(errorMap.mapError(type)).json({ message });
+  return res.status(httpStatusCode.CREATED).json({ token });
+};
 
-//   return res.status(httpStatusCode.OK).json({ token });
-// };
+module.exports = {
+  createUser,
+};

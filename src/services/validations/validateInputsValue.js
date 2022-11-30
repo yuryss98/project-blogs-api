@@ -1,21 +1,22 @@
-const { loginSchema } = require('./schemas');
+const { loginSchema, createUserSchema } = require('./schemas');
 
-const checkErrorType = (error) => {
-  if (error.message.includes('required')) {
-    return { type: 'BAD_REQUEST', message: error.message };
-  }
-
-  return { type: 'UNPROCESSABLE_ENTITY', message: error.message };
-};
-
-const validateInputValues = (email, password) => {
+const login = (email, password) => {
   const { error } = loginSchema.validate({ email, password });
   
-  if (error) return checkErrorType(error);
+  if (error) return { type: 'BAD_REQUEST', message: error.message };
+
+  return { type: null, message: '' };
+};
+
+const createUser = (newUser) => {
+  const { error } = createUserSchema.validate(newUser);
+  
+  if (error) return { type: 'BAD_REQUEST', message: error.message };
 
   return { type: null, message: '' };
 };
 
 module.exports = {
-  validateInputValues,
+  login,
+  createUser,
 };
