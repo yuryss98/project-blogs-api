@@ -13,19 +13,25 @@ const createToken = (user) => {
 };
 
 const validateToken = async (req, res, next) => {
-  const token = req.header('Authorization');
+  try {
+    const token = req.header('Authorization');
   
     if (!token) {
-      return res.status(httpStatusCode.NOT_FOUND).json({ error: 'Token não encontrado' });
+      return res.status(httpStatusCode.UNAUTHORIZED).json({ message: 'Token not found' });
     }
   
     const decoded = jwt.verify(token, SECRET_KEY);
   
-    const { data: { email } } = decoded;
-  
-    req.email = email;
+    const { data } = decoded;
+
+    req.user = data;
   
     next();
+  } catch (error) {
+    console.error(error.message);
+
+    return res.status(httpStatusCode.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
+  }
   };
 
 module.exports = {

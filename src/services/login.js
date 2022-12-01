@@ -19,6 +19,6 @@ module.exports = async (email, password) => {
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'unexpected error' };
+    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
   }
 };

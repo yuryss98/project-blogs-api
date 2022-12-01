@@ -16,6 +16,23 @@ const createUser = async (newUser) => {
   }
 };
 
+const getAll = async () => {
+  try {
+    const users = await User.findAll({
+      attributes: {
+        exclude: 'password',
+      },
+    });
+
+    return { type: null, message: users };
+  } catch (error) {
+    console.error(error.message);
+
+    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+  }
+};
+
 module.exports = {
   createUser,
+  getAll,
 };
