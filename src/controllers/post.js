@@ -11,10 +11,8 @@ const createBlogPost = async (req, res) => {
   return res.status(httpStatusCode.CREATED).json(message);
 };
 
-const getAllPostByUser = async (req, res) => {
-  const userId = req.user.id;
-
-  const { type, message } = await postServices.getAllPostByUser(userId);
+const getAllPostByUsers = async (_req, res) => {
+  const { type, message } = await postServices.getAllPostByUsers();
   if (type) return res.status(errorMap.mapError(type)).json({ message });
 
   return res.status(httpStatusCode.OK).json(message);
@@ -31,6 +29,6 @@ const getPostById = async (req, res) => {
 
 module.exports = {
   createBlogPost,
-  getAllPostByUser,
+  getAllPostByUsers,
   getPostById,
 };
