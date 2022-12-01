@@ -16,7 +16,12 @@ const createUserSchema = Joi.object({
   image: Joi.string(),
 });
 
+const createCategorySchema = Joi.object({
+  name: Joi.string().min(5).required(),
+});
+
 module.exports = {
   loginSchema,
   createUserSchema,
+  createCategorySchema,
 };
