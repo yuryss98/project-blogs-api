@@ -18,9 +18,8 @@ const createBlogPost = async (newBlogPost, userId) => {
       published: new Date(),
       updated: new Date(),
     });
-    console.log(blogPostCreated);
 
-    return { type: null, message: { ...blogPostCreated.dataValues, id: blogPostCreated.null } };
+    return { type: null, message: blogPostCreated };
   } catch (error) {
     console.error(error.message);
 

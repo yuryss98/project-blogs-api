@@ -8,7 +8,7 @@ const createCategory = async (name) => {
 
     const categoryCreated = await Category.create({ name });
 
-    return { type: null, message: { ...categoryCreated.dataValues, id: categoryCreated.null } };
+    return { type: null, message: categoryCreated };
   } catch (error) {
     console.error(error.message);
 
