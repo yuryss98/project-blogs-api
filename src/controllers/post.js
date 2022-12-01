@@ -9,8 +9,18 @@ const createBlogPost = async (req, res) => {
   if (type) return res.status(errorMap.mapError(type)).json({ message });
 
   return res.status(httpStatusCode.CREATED).json(message);
-}; 
+};
+
+const getAllPostByUser = async (req, res) => {
+  const userId = req.user.id;
+
+  const { type, message } = await postServices.getAllPostByUser(userId);
+  if (type) return res.status(errorMap.mapError(type)).json({ message });
+
+  return res.status(httpStatusCode.OK).json(message);
+};
 
 module.exports = {
   createBlogPost,
+  getAllPostByUser,
 };
