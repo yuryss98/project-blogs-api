@@ -16,8 +16,6 @@ const blogPostCreate = async ({ title, content, categoryIds }, userId) => {
     title,
     content,
     userId,
-    published: new Date(),
-    updated: new Date(),
   });
 
   const { dataValues: { id } } = blogPostCreated;
