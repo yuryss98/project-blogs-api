@@ -16,6 +16,19 @@ const createCategory = async (name) => {
   }
 };
 
+const getAll = async () => {
+  try {
+    const categories = await Category.findAll();
+
+    return { type: null, message: categories };
+  } catch (error) {
+    console.error(error.message);
+
+    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+  }
+};
+
 module.exports = {
   createCategory,
+  getAll,
 };
