@@ -63,7 +63,28 @@ const getAllPostByUser = async (userId) => {
   }
 };
 
+const getPostById = async (id) => {
+  try {
+    const post = await BlogPost.findOne({
+      where: { id },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: 'password' } },
+        { model: Category, as: 'categories' },
+      ],
+    });
+
+    if (post) return { type: null, message: post };
+
+    return { type: 'NOT_FOUND', message: 'Post does not exist' };
+  } catch (error) {
+    console.error(error.message);
+
+    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+  }
+};
+
 module.exports = {
   createBlogPost,
   getAllPostByUser,
+  getPostById,
 };

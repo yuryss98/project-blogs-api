@@ -20,9 +20,7 @@ const validateToken = async (req, res, next) => {
       return res.status(httpStatusCode.UNAUTHORIZED).json({ message: 'Token not found' });
     }
   
-    const decoded = jwt.verify(token, SECRET_KEY);
-  
-    const { data } = decoded;
+    const { data } = jwt.verify(token, SECRET_KEY);
 
     req.user = data;
   

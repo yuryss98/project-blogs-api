@@ -20,7 +20,17 @@ const getAllPostByUser = async (req, res) => {
   return res.status(httpStatusCode.OK).json(message);
 };
 
+const getPostById = async (req, res) => {
+  const { id } = req.params;
+
+  const { type, message } = await postServices.getPostById(id);
+  if (type) return res.status(errorMap.mapError(type)).json({ message });
+
+  return res.status(httpStatusCode.OK).json(message);
+};
+
 module.exports = {
   createBlogPost,
   getAllPostByUser,
+  getPostById,
 };
