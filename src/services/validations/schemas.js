@@ -32,9 +32,18 @@ const createBlogPostSchema = Joi.object({
   'array.min': customMessage,
 });
 
+const updateBlogPostSchema = Joi.object({
+  title: Joi.string().min(1).required(),
+  content: Joi.string().min(1).required(),
+}).required().messages({
+  'any.required': customMessage,
+  'string.empty': customMessage,
+});
+
 module.exports = {
   loginSchema,
   createUserSchema,
   createCategorySchema,
   createBlogPostSchema,
+  updateBlogPostSchema,
 };

@@ -3,6 +3,7 @@ const {
   createUserSchema,
   createCategorySchema,
   createBlogPostSchema,
+  updateBlogPostSchema,
 } = require('./schemas');
 
 const login = (email, password) => {
@@ -37,9 +38,18 @@ const createBlogPost = (newBlogPost) => {
   return { type: null, message: '' };
 };
 
+const updateBlogPost = (newBlogPost) => {
+  const { error } = updateBlogPostSchema.validate(newBlogPost);
+  
+  if (error) return { type: 'BAD_REQUEST', message: error.message };
+
+  return { type: null, message: '' };
+};
+
 module.exports = {
   login,
   createUser,
   createCategory,
   createBlogPost,
+  updateBlogPost,
 };
