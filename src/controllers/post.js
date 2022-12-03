@@ -48,10 +48,20 @@ const deletePost = async (req, res) => {
   return res.status(httpStatusCode.NO_CONTENT).end();
 };
 
+const getPostByQuery = async (req, res) => {
+  const { q } = req.query;
+  
+  const { type, message } = await postServices.getPostByQuery(q);
+  if (type) return res.status(errorMap.mapError(type)).json({ message });
+
+  return res.status(httpStatusCode.OK).json(message);
+};
+
 module.exports = {
   createBlogPost,
   getAllPostByUsers,
   getPostById,
   updatePost,
   deletePost,
+  getPostByQuery,
 };

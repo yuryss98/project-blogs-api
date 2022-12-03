@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, PostCategory, Category, User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
 const validateCategoryExists = require('./validations/validateCategoryExists');
@@ -122,10 +123,35 @@ const deletePost = async (id, userId) => {
   }
 };
 
+const getPostByQuery = async (q) => {
+  try {
+    const foundPost = await BlogPost.findAll({
+      where: {
+        [Op.or]: {
+          title: { [Op.like]: `%${q}%` },
+          content: { [Op.like]: `%${q}%` },
+        },
+      },
+
+      include: [
+        { model: User, as: 'user', attributes: { exclude: 'password' } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+
+    return { type: null, message: foundPost };
+  } catch (error) {
+    console.error(error.message);
+
+    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+  }
+};
+
 module.exports = {
   createBlogPost,
   getAllPostByUsers,
   getPostById,
   updatePost,
   deletePost,
+  getPostByQuery,
 };
