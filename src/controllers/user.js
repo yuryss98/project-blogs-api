@@ -1,4 +1,4 @@
-const { errorMap, httpStatusCode } = require('../utils');
+const { httpStatusCode, responseForClient, errorMap } = require('../utils');
 const { userService } = require('../services');
 const { createToken } = require('../auth/jsonWebToken');
 
@@ -15,27 +15,24 @@ const createUser = async (req, res) => {
 
 const getAll = async (_req, res) => {
   const { type, message } = await userService.getAll();
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
-
-  return res.status(httpStatusCode.OK).json(message);
+  
+  return responseForClient(type, message, res, httpStatusCode.OK);
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
 
   const { type, message } = await userService.getById(id);
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
-
-  return res.status(httpStatusCode.OK).json(message);
+  
+  return responseForClient(type, message, res, httpStatusCode.OK);
 };
 
 const deleteUser = async (req, res) => {
   const userId = req.user.id;
 
   const { type, message } = await userService.deleteUser(userId);
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
-
-  return res.status(httpStatusCode.NO_CONTENT).end();
+  
+  return responseForClient(type, message, res, httpStatusCode.NO_CONTENT);
 };
 
 module.exports = {
