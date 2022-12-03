@@ -3,7 +3,8 @@ const { userController } = require('../controllers');
 const { validateToken } = require('../auth/jsonWebToken');
 
 router.get('/', validateToken, userController.getAll);
-router.get('/:id', validateToken, userController.getById);
 router.post('/', userController.createUser);
+router.delete('/me', validateToken, userController.deleteUser);
+router.get('/:id', validateToken, userController.getById);
 
 module.exports = router;

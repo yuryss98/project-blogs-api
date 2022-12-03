@@ -42,7 +42,19 @@ const getById = async (id) => {
 
     if (!user) return { type: 'NOT_FOUND', message: 'User does not exist' };
 
-  return { type: null, message: user };
+    return { type: null, message: user };
+  } catch (error) {
+    console.error(error.message);
+
+    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+  }
+};
+
+const deleteUser = async (id) => {
+  try {
+    await User.destroy({ where: { id } });
+
+    return { type: null, message: '' };
   } catch (error) {
     console.error(error.message);
 
@@ -54,4 +66,5 @@ module.exports = {
   createUser,
   getAll,
   getById,
+  deleteUser,
 };
