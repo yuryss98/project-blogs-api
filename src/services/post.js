@@ -3,6 +3,8 @@ const { BlogPost, PostCategory, Category, User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
 const validateCategoryExists = require('./validations/validateCategoryExists');
 
+const ERROR_SERVER = { type: 'SERVER_ERROR', message: 'Unexpected error' };
+
 const createCategoryPost = async (postId, categoryIds) => {
   const PostCategoryIds = categoryIds.map((categoryId) => ({
       postId,
@@ -40,7 +42,7 @@ const createBlogPost = async (newBlogPost, userId) => {
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'CONFLICT', message: 'User already registered' };
+    return ERROR_SERVER;
   }
 };
 
@@ -57,7 +59,7 @@ const getAllPostByUsers = async () => {
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return ERROR_SERVER;
   }
 };
 
@@ -77,7 +79,7 @@ const getPostById = async (id) => {
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return ERROR_SERVER;
   }
 };
 
@@ -99,7 +101,7 @@ const updatePost = async (id, userId, title, content) => {
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return ERROR_SERVER;
   }
 };
 
@@ -119,7 +121,7 @@ const deletePost = async (id, userId) => {
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return ERROR_SERVER;
   }
 };
 
@@ -143,7 +145,7 @@ const getPostByQuery = async (q) => {
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return ERROR_SERVER;
   }
 };
 
