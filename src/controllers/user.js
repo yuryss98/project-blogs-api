@@ -4,6 +4,19 @@ const { createToken } = require('../auth/jsonWebToken');
 
 const { sucessfulResponse, errorResponseMapper } = httpStatusCode;
 
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  const { type, message } = await userService.login(email, password);
+  if (type) return res.status(errorResponseMapper(type)).json({ message });
+
+  const { password: _, ...userWithoutPassword } = message.dataValues;
+
+  const token = createToken(userWithoutPassword);
+
+  return res.status(sucessfulResponse.OK).json({ token });
+};
+
 const createUser = async (req, res) => {
   const { type, message } = await userService.createUser(req.body);
   if (type) return res.status(errorResponseMapper(type)).json({ message });
@@ -38,6 +51,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+  login,
   createUser,
   getAll,
   getById,

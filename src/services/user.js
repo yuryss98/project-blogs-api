@@ -2,6 +2,28 @@ const { User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
 const { SERVICE_SUCESSFULL, UNSUCCESSFUL_SERVICE } = require('./helpers');
 
+const login = async (email, password) => {
+  try {
+    const { type, message } = validateInputValues.login(email, password);
+    if (type) return { type, message };
+
+    const user = await User.findOne({
+      where: {
+        email,
+        password,
+      },
+    });
+
+    if (!user) return { type: 'BAD_REQUEST', message: 'Invalid fields' };
+
+    return { ...SERVICE_SUCESSFULL, message: user };
+  } catch (error) {
+    console.error(error.message);
+
+    return UNSUCCESSFUL_SERVICE;
+  }
+};
+
 const createUser = async (newUser) => {
   try {
     const { type, message } = validateInputValues.createUser(newUser);
@@ -64,6 +86,7 @@ const deleteUser = async (id) => {
 };
 
 module.exports = {
+  login,
   createUser,
   getAll,
   getById,
