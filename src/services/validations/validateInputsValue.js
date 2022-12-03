@@ -6,44 +6,40 @@ const {
   updateBlogPostSchema,
 } = require('./schemas');
 
-const login = (email, password) => {
-  const { error } = loginSchema.validate({ email, password });
-  
+const errorIsExists = (error) => {
   if (error) return { type: 'BAD_REQUEST', message: error.message };
 
   return { type: null, message: '' };
+};
+
+const login = (email, password) => {
+  const { error } = loginSchema.validate({ email, password });
+  
+  return errorIsExists(error);
 };
 
 const createUser = (newUser) => {
   const { error } = createUserSchema.validate(newUser);
   
-  if (error) return { type: 'BAD_REQUEST', message: error.message };
-
-  return { type: null, message: '' };
+  return errorIsExists(error);
 };
 
 const createCategory = (name) => {
   const { error } = createCategorySchema.validate({ name });
   
-  if (error) return { type: 'BAD_REQUEST', message: error.message };
-
-  return { type: null, message: '' };
+  return errorIsExists(error);
 };
 
 const createBlogPost = (newBlogPost) => {
   const { error } = createBlogPostSchema.validate(newBlogPost);
   
-  if (error) return { type: 'BAD_REQUEST', message: error.message };
-
-  return { type: null, message: '' };
+  return errorIsExists(error);
 };
 
 const updateBlogPost = (newBlogPost) => {
   const { error } = updateBlogPostSchema.validate(newBlogPost);
   
-  if (error) return { type: 'BAD_REQUEST', message: error.message };
-
-  return { type: null, message: '' };
+  return errorIsExists(error);
 };
 
 module.exports = {
