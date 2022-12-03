@@ -1,19 +1,21 @@
 const { httpStatusCode, responseForClient } = require('../utils');
 const { postServices } = require('../services');
 
+const { sucessfulResponse } = httpStatusCode;
+
 const createBlogPost = async (req, res) => {
   const newBlogPost = req.body;
   const userId = req.user.id;
 
   const { type, message } = await postServices.createBlogPost(newBlogPost, userId);
 
-  return responseForClient(type, message, res, httpStatusCode.CREATED);
+  return responseForClient(type, message, res, sucessfulResponse.CREATED);
 };
 
 const getAllPostByUsers = async (_req, res) => {
   const { type, message } = await postServices.getAllPostByUsers();
 
-  return responseForClient(type, message, res, httpStatusCode.OK);
+  return responseForClient(type, message, res, sucessfulResponse.OK);
 };
 
 const getPostById = async (req, res) => {
@@ -21,7 +23,7 @@ const getPostById = async (req, res) => {
 
   const { type, message } = await postServices.getPostById(id);
 
-  return responseForClient(type, message, res, httpStatusCode.OK);
+  return responseForClient(type, message, res, sucessfulResponse.OK);
 };
 
 const updatePost = async (req, res) => {
@@ -31,7 +33,7 @@ const updatePost = async (req, res) => {
 
   const { type, message } = await postServices.updatePost(id, userId, title, content);
 
-  return responseForClient(type, message, res, httpStatusCode.OK);
+  return responseForClient(type, message, res, sucessfulResponse.OK);
 };
 
 const deletePost = async (req, res) => {
@@ -40,7 +42,7 @@ const deletePost = async (req, res) => {
 
   const { type, message } = await postServices.deletePost(id, userId);
   
-  return responseForClient(type, message, res, httpStatusCode.NO_CONTENT);
+  return responseForClient(type, message, res, sucessfulResponse.NO_CONTENT);
 };
 
 const getPostByQuery = async (req, res) => {
@@ -48,7 +50,7 @@ const getPostByQuery = async (req, res) => {
   
   const { type, message } = await postServices.getPostByQuery(q);
 
-  return responseForClient(type, message, res, httpStatusCode.OK);
+  return responseForClient(type, message, res, sucessfulResponse.OK);
 };
 
 module.exports = {

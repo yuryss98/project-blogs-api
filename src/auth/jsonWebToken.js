@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { httpStatusCode } = require('../utils');
+const { errorResponse } = require('../utils/httpStatusCode');
 
 const SECRET_KEY = process.env.JWT_SECRET;
 
@@ -17,7 +17,7 @@ const validateToken = async (req, res, next) => {
     const token = req.header('Authorization');
   
     if (!token) {
-      return res.status(httpStatusCode.UNAUTHORIZED).json({ message: 'Token not found' });
+      return res.status(errorResponse.UNAUTHORIZED).json({ message: 'Token not found' });
     }
   
     const { data } = jwt.verify(token, SECRET_KEY);
@@ -28,7 +28,7 @@ const validateToken = async (req, res, next) => {
   } catch (error) {
     console.error(error.message);
 
-    return res.status(httpStatusCode.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
+    return res.status(errorResponse.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
   }
   };
 

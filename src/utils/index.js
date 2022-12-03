@@ -1,9 +1,7 @@
-const errorMap = require('./errorMap');
-const httpStatusCode = require('./httpStatusCode');
 const responseForClient = require('./responseForClient');
+const httpStatusCode = require('./httpStatusCode');
 
 module.exports = {
-  errorMap,
-  httpStatusCode,
   responseForClient,
+  httpStatusCode,
 };
