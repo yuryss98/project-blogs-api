@@ -1,6 +1,5 @@
-const { httpStatusCode } = require('../utils');
+const { httpStatusCode, responseForClient } = require('../utils');
 const { postServices } = require('../services');
-const responseForClient = require('../utils/responseForClient');
 
 const createBlogPost = async (req, res) => {
   const newBlogPost = req.body;
