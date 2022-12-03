@@ -1,30 +1,28 @@
-const { errorMap, httpStatusCode } = require('../utils');
+const { httpStatusCode } = require('../utils');
 const { postServices } = require('../services');
+const responseForClient = require('../utils/responseForClient');
 
 const createBlogPost = async (req, res) => {
   const newBlogPost = req.body;
   const userId = req.user.id;
 
   const { type, message } = await postServices.createBlogPost(newBlogPost, userId);
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
 
-  return res.status(httpStatusCode.CREATED).json(message);
+  return responseForClient(type, message, res, httpStatusCode.CREATED);
 };
 
 const getAllPostByUsers = async (_req, res) => {
   const { type, message } = await postServices.getAllPostByUsers();
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
 
-  return res.status(httpStatusCode.OK).json(message);
+  return responseForClient(type, message, res, httpStatusCode.OK);
 };
 
 const getPostById = async (req, res) => {
   const { id } = req.params;
 
   const { type, message } = await postServices.getPostById(id);
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
 
-  return res.status(httpStatusCode.OK).json(message);
+  return responseForClient(type, message, res, httpStatusCode.OK);
 };
 
 const updatePost = async (req, res) => {
@@ -33,9 +31,8 @@ const updatePost = async (req, res) => {
   const userId = req.user.id;
 
   const { type, message } = await postServices.updatePost(id, userId, title, content);
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
 
-  return res.status(httpStatusCode.OK).json(message);
+  return responseForClient(type, message, res, httpStatusCode.OK);
 };
 
 const deletePost = async (req, res) => {
@@ -43,18 +40,16 @@ const deletePost = async (req, res) => {
   const userId = req.user.id;
 
   const { type, message } = await postServices.deletePost(id, userId);
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
-
-  return res.status(httpStatusCode.NO_CONTENT).end();
+  
+  return responseForClient(type, message, res, httpStatusCode.NO_CONTENT);
 };
 
 const getPostByQuery = async (req, res) => {
   const { q } = req.query;
   
   const { type, message } = await postServices.getPostByQuery(q);
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
 
-  return res.status(httpStatusCode.OK).json(message);
+  return responseForClient(type, message, res, httpStatusCode.OK);
 };
 
 module.exports = {
