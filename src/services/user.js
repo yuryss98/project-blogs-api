@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
+const { SERVICE_SUCESSFULL, UNSUCCESSFUL_SERVICE } = require('./helpers');
 
 const createUser = async (newUser) => {
   try {
@@ -8,7 +9,7 @@ const createUser = async (newUser) => {
 
     const userCreated = await User.create({ ...newUser });
 
-    return { type: null, message: userCreated };
+    return { ...SERVICE_SUCESSFULL, message: userCreated };
   } catch (error) {
     console.error(error.message);
 
@@ -24,11 +25,11 @@ const getAll = async () => {
       },
     });
 
-    return { type: null, message: users };
+    return { ...SERVICE_SUCESSFULL, message: users };
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
@@ -42,11 +43,11 @@ const getById = async (id) => {
 
     if (!user) return { type: 'NOT_FOUND', message: 'User does not exist' };
 
-    return { type: null, message: user };
+    return { ...SERVICE_SUCESSFULL, message: user };
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
@@ -54,11 +55,11 @@ const deleteUser = async (id) => {
   try {
     await User.destroy({ where: { id } });
 
-    return { type: null, message: '' };
+    return SERVICE_SUCESSFULL;
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 

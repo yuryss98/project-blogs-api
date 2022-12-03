@@ -1,9 +1,10 @@
 const { User } = require('../models');
-const validateInputsValue = require('./validations/validateInputsValue');
+const validateInputsValues = require('./validations/validateInputsValue');
+const { SERVICE_SUCESSFULL, UNSUCCESSFUL_SERVICE } = require('./helpers');
 
 module.exports = async (email, password) => {
   try {
-    const { type, message } = validateInputsValue.login(email, password);
+    const { type, message } = validateInputsValues.login(email, password);
     if (type) return { type, message };
 
     const user = await User.findOne({
@@ -15,10 +16,10 @@ module.exports = async (email, password) => {
 
     if (!user) return { type: 'BAD_REQUEST', message: 'Invalid fields' };
 
-    return { type: null, message: user };
+    return { ...SERVICE_SUCESSFULL, message: user };
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return UNSUCCESSFUL_SERVICE;
   }
 };

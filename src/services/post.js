@@ -2,8 +2,12 @@ const { Op } = require('sequelize');
 const { BlogPost, PostCategory, Category, User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
 const validateCategoryExists = require('./validations/validateCategoryExists');
-
-const ERROR_SERVER = { type: 'SERVER_ERROR', message: 'Unexpected error' };
+const {
+  SERVICE_SUCESSFULL,
+  UNSUCCESSFUL_SERVICE,
+  POST_DOES_NOT_EXISTS,
+  UNAUTHORIZED,
+} = require('./helpers');
 
 const createCategoryPost = async (postId, categoryIds) => {
   const PostCategoryIds = categoryIds.map((categoryId) => ({
@@ -38,11 +42,11 @@ const createBlogPost = async (newBlogPost, userId) => {
 
     const blogPostCreated = await blogPostCreate(newBlogPost, userId);
 
-    return { type: null, message: blogPostCreated };
+    return { ...SERVICE_SUCESSFULL, message: blogPostCreated };
   } catch (error) {
     console.error(error.message);
 
-    return ERROR_SERVER;
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
@@ -55,11 +59,11 @@ const getAllPostByUsers = async () => {
       ],
     });
   
-    return { type: null, message: data };
+    return { ...SERVICE_SUCESSFULL, message: data };
   } catch (error) {
     console.error(error.message);
 
-    return ERROR_SERVER;
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
@@ -73,13 +77,13 @@ const getPostById = async (id) => {
       ],
     });
 
-    if (post) return { type: null, message: post };
+    if (!post) return POST_DOES_NOT_EXISTS;
 
-    return { type: 'NOT_FOUND', message: 'Post does not exist' };
+    return { ...SERVICE_SUCESSFULL, message: post };
   } catch (error) {
     console.error(error.message);
 
-    return ERROR_SERVER;
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
@@ -93,15 +97,15 @@ const updatePost = async (id, userId, title, content) => {
       { where: { id, userId } },
     );
 
-    if (!updatedPost) return { type: 'UNAUTHORIZED', message: 'Unauthorized user' };
+    if (!updatedPost) return UNAUTHORIZED;
 
     const result = await getPostById(id);
 
-    return { type: null, message: result.message };
+    return { ...SERVICE_SUCESSFULL, message: result.message };
   } catch (error) {
     console.error(error.message);
 
-    return ERROR_SERVER;
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
@@ -109,19 +113,19 @@ const deletePost = async (id, userId) => {
   try {
     const postIsExists = await BlogPost.findByPk(id);
 
-    if (!postIsExists) return { type: 'NOT_FOUND', message: 'Post does not exist' };
+    if (!postIsExists) return POST_DOES_NOT_EXISTS;
 
     const deletedPost = await BlogPost.destroy(
       { where: { id, userId } },
     );
 
-    if (!deletedPost) return { type: 'UNAUTHORIZED', message: 'Unauthorized user' };
+    if (!deletedPost) return UNAUTHORIZED;
 
-    return { type: null, message: '' };
+    return SERVICE_SUCESSFULL;
   } catch (error) {
     console.error(error.message);
 
-    return ERROR_SERVER;
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
@@ -141,11 +145,11 @@ const getPostByQuery = async (q) => {
       ],
     });
 
-    return { type: null, message: foundPost };
+    return { ...SERVICE_SUCESSFULL, message: foundPost };
   } catch (error) {
     console.error(error.message);
 
-    return ERROR_SERVER;
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 

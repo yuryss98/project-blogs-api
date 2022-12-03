@@ -1,5 +1,6 @@
 const { Category } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
+const { SERVICE_SUCESSFULL, UNSUCCESSFUL_SERVICE } = require('./helpers');
 
 const createCategory = async (name) => {
   try {
@@ -8,11 +9,11 @@ const createCategory = async (name) => {
 
     const categoryCreated = await Category.create({ name });
 
-    return { type: null, message: categoryCreated };
+    return { ...SERVICE_SUCESSFULL, message: categoryCreated };
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
@@ -20,11 +21,11 @@ const getAll = async () => {
   try {
     const categories = await Category.findAll();
 
-    return { type: null, message: categories };
+    return { ...SERVICE_SUCESSFULL, message: categories };
   } catch (error) {
     console.error(error.message);
 
-    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+    return UNSUCCESSFUL_SERVICE;
   }
 };
 
