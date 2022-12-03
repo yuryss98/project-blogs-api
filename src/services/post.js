@@ -102,9 +102,30 @@ const updatePost = async (id, userId, title, content) => {
   }
 };
 
+const deletePost = async (id, userId) => {
+  try {
+    const postIsExists = await BlogPost.findByPk(id);
+
+    if (!postIsExists) return { type: 'NOT_FOUND', message: 'Post does not exist' };
+
+    const deletedPost = await BlogPost.destroy(
+      { where: { id, userId } },
+    );
+
+    if (!deletedPost) return { type: 'UNAUTHORIZED', message: 'Unauthorized user' };
+
+    return { type: null, message: '' };
+  } catch (error) {
+    console.error(error.message);
+
+    return { type: 'SERVER_ERROR', message: 'Unexpected error' };
+  }
+};
+
 module.exports = {
   createBlogPost,
   getAllPostByUsers,
   getPostById,
   updatePost,
+  deletePost,
 };
