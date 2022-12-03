@@ -4,10 +4,7 @@ const { postServices } = require('../services');
 const { sucessfulResponse } = httpStatusCode;
 
 const createBlogPost = async (req, res) => {
-  const newBlogPost = req.body;
-  const userId = req.user.id;
-
-  const { type, message } = await postServices.createBlogPost(newBlogPost, userId);
+  const { type, message } = await postServices.createBlogPost(req.body, req.user.id);
 
   return responseForClient(type, message, res, sucessfulResponse.CREATED);
 };

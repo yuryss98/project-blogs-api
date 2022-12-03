@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { BlogPost, PostCategory, Category, User } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
 const validateCategoryExists = require('./validations/validateCategoryExists');
 const {
@@ -9,38 +9,17 @@ const {
   UNAUTHORIZED,
 } = require('./helpers');
 
-const createCategoryPost = async (postId, categoryIds) => {
-  const PostCategoryIds = categoryIds.map((categoryId) => ({
-      postId,
-      categoryId,
-    }));
-
-  await PostCategory.bulkCreate(PostCategoryIds);
-};
-
-const blogPostCreate = async ({ title, content, categoryIds }, userId) => {
-  const blogPostCreated = await BlogPost.create({
-    title,
-    content,
-    userId,
-  });
-
-  const { dataValues: { id } } = blogPostCreated;
-
-  await createCategoryPost(id, categoryIds);
-
-  return blogPostCreated;
-};
-
-const createBlogPost = async (newBlogPost, userId) => {
+const createBlogPost = async ({ title, content, categoryIds }, userId) => {
   try {
-    const { type, message } = validateInputValues.createBlogPost(newBlogPost);
+    const { type, message } = validateInputValues.createBlogPost({ title, content, categoryIds });
     if (type) return { type, message };
 
-    const categoryIsExists = await validateCategoryExists(newBlogPost.categoryIds);
+    const categoryIsExists = await validateCategoryExists(categoryIds);
     if (categoryIsExists.type) return categoryIsExists;
 
-    const blogPostCreated = await blogPostCreate(newBlogPost, userId);
+    const blogPostCreated = await BlogPost.create({ title, content, userId });
+
+    await blogPostCreated.addCategory(categoryIds);
 
     return { ...SERVICE_SUCESSFULL, message: blogPostCreated };
   } catch (error) {

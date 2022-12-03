@@ -1,23 +1,16 @@
+const { Op } = require('sequelize');
 const { Category } = require('../../models');
 
 module.exports = async (categories) => {
-  let categoryNotFound = 0;
-
-  const result = categories.map(async (id) => {
-    const data = await Category.findByPk(id);
-
-    if (data === undefined || data === null) {
-      categoryNotFound += 1;
-
-      return categoryNotFound;
-    }
-
-    return data;
+  const result = await Category.findAll({
+    where: {
+      id: {
+        [Op.in]: categories,
+      },
+    },
   });
 
-  await Promise.all(result);
-
-  if (categoryNotFound > 0) {
+  if (result.length !== categories.length) {
     return { type: 'BAD_REQUEST', message: 'one or more "categoryIds" not found' };
   }
 
