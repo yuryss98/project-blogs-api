@@ -66,7 +66,7 @@ const getPostById = async (id) => {
   }
 };
 
-const updatePost = async (id, userId, title, content) => {
+const updatePost = async ({ title, content }, id, userId) => {
   try {
     const { type, message } = validateInputValues.updateBlogPost({ title, content });
     if (type) return { type, message };
@@ -108,13 +108,13 @@ const deletePost = async (id, userId) => {
   }
 };
 
-const getPostByQuery = async (q) => {
+const getPostByQuery = async (query) => {
   try {
     const foundPost = await BlogPost.findAll({
       where: {
         [Op.or]: {
-          title: { [Op.like]: `%${q}%` },
-          content: { [Op.like]: `%${q}%` },
+          title: { [Op.like]: `%${query}%` },
+          content: { [Op.like]: `%${query}%` },
         },
       },
 

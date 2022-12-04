@@ -16,36 +16,25 @@ const getAllPostByUsers = async (_req, res) => {
 };
 
 const getPostById = async (req, res) => {
-  const { id } = req.params;
-
-  const { type, message } = await postServices.getPostById(id);
+  const { type, message } = await postServices.getPostById(req.params.id);
 
   return responseForClient(type, message, res, sucessfulResponse.OK);
 };
 
 const updatePost = async (req, res) => {
-  const { id } = req.params;
-  const { title, content } = req.body;
-  const userId = req.user.id;
-
-  const { type, message } = await postServices.updatePost(id, userId, title, content);
+  const { type, message } = await postServices.updatePost(req.body, req.params.id, req.user.id);
 
   return responseForClient(type, message, res, sucessfulResponse.OK);
 };
 
 const deletePost = async (req, res) => {
-  const { id } = req.params;
-  const userId = req.user.id;
-
-  const { type, message } = await postServices.deletePost(id, userId);
+  const { type, message } = await postServices.deletePost(req.params.id, req.user.id);
   
   return responseForClient(type, message, res, sucessfulResponse.NO_CONTENT);
 };
 
 const getPostByQuery = async (req, res) => {
-  const { q } = req.query;
-  
-  const { type, message } = await postServices.getPostByQuery(q);
+  const { type, message } = await postServices.getPostByQuery(req.query.q);
 
   return responseForClient(type, message, res, sucessfulResponse.OK);
 };
