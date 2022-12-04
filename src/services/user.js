@@ -1,6 +1,7 @@
 const { User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
 const { SERVICE_SUCESSFULL, UNSUCCESSFUL_SERVICE } = require('./helpers');
+const { createToken } = require('../auth/jsonWebToken');
 
 const login = async ({ email, password }) => {
   try {
@@ -16,7 +17,11 @@ const login = async ({ email, password }) => {
 
     if (!user) return { type: 'BAD_REQUEST', message: 'Invalid fields' };
 
-    return { ...SERVICE_SUCESSFULL, message: user };
+    const { password: _, ...userWithoutPassword } = user.dataValues;
+
+    const token = createToken(userWithoutPassword);
+
+    return { ...SERVICE_SUCESSFULL, message: { token } };
   } catch (error) {
     console.error(error.message);
 
@@ -31,7 +36,11 @@ const createUser = async (newUser) => {
 
     const userCreated = await User.create({ ...newUser });
 
-    return { ...SERVICE_SUCESSFULL, message: userCreated };
+    const { password: _, ...userWithoutPassword } = userCreated.dataValues;
+
+    const token = createToken(userWithoutPassword);
+
+    return { ...SERVICE_SUCESSFULL, message: { token } };
   } catch (error) {
     console.error(error.message);
 

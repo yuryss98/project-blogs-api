@@ -1,6 +1,5 @@
 const { httpStatusCode, responseForClient } = require('../utils');
 const { userService } = require('../services');
-const { createToken } = require('../auth/jsonWebToken');
 
 const { sucessfulResponse, errorResponseMapper } = httpStatusCode;
 
@@ -8,22 +7,14 @@ const login = async (req, res) => {
   const { type, message } = await userService.login(req.body);
   if (type) return res.status(errorResponseMapper(type)).json({ message });
 
-  const { password: _, ...userWithoutPassword } = message.dataValues;
-
-  const token = createToken(userWithoutPassword);
-
-  return res.status(sucessfulResponse.OK).json({ token });
+  return res.status(sucessfulResponse.OK).json(message);
 };
 
 const createUser = async (req, res) => {
   const { type, message } = await userService.createUser(req.body);
   if (type) return res.status(errorResponseMapper(type)).json({ message });
 
-  const { password: _, ...userWithoutPassword } = message.dataValues;
-
-  const token = createToken(userWithoutPassword);
-
-  return res.status(sucessfulResponse.CREATED).json({ token });
+  return res.status(sucessfulResponse.CREATED).json(message);
 };
 
 const getAll = async (_req, res) => {
