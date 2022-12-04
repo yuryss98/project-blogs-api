@@ -55,3 +55,18 @@ Abra O terminal e execute os comandos:
 ```
 
 ## Depois de executar todos os comandos, ja teremos uma aplicação rodando na porta 3000, e um banco de dados criado e populado, com isso estamos prontos para consumir os devidos endpoints!!
+
+## Endpoints: todos os endpoints são acessiveis a partir da rota http://localhost:3000
+  
+  <details close>
+  <summary>POST /login</summary>
+  
+  ```json
+      {
+        "email": "lewishamilton@gmail.com",
+        "password": "123456"
+      }
+  ```
+  
+  </details>
+  
