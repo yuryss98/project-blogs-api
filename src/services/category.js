@@ -2,7 +2,7 @@ const { Category } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
 const { SERVICE_SUCESSFULL, UNSUCCESSFUL_SERVICE } = require('./helpers');
 
-const createCategory = async (name) => {
+const createCategory = async ({ name }) => {
   try {
     const { type, message } = validateInputValues.createCategory(name);
     if (type) return { type, message };

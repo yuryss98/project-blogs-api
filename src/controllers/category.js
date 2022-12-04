@@ -4,9 +4,7 @@ const { categoryServices } = require('../services');
 const { sucessfulResponse } = httpStatusCode;
 
 const createCategory = async (req, res) => {
-  const { name } = req.body;
-
-  const { type, message } = await categoryServices.createCategory(name);
+  const { type, message } = await categoryServices.createCategory(req.body);
   
   return responseForClient(type, message, res, sucessfulResponse.CREATED);
 };
