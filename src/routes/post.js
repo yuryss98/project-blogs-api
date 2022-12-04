@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { postController } = require('../controllers');
-const { validateToken } = require('../auth/jsonWebToken');
+const validateToken = require('../middleware/validateToken');
 
 router.get('/', validateToken, postController.getAllPostByUsers);
 router.get('/search', validateToken, postController.getPostByQuery);

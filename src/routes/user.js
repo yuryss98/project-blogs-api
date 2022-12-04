@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { userController } = require('../controllers');
-const { validateToken } = require('../auth/jsonWebToken');
+const validateToken = require('../middleware/validateToken');
 
 router.get('/', validateToken, userController.getAll);
 router.post('/', userController.createUser);
