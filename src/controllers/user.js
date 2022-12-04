@@ -5,9 +5,7 @@ const { createToken } = require('../auth/jsonWebToken');
 const { sucessfulResponse, errorResponseMapper } = httpStatusCode;
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  const { type, message } = await userService.login(email, password);
+  const { type, message } = await userService.login(req.body);
   if (type) return res.status(errorResponseMapper(type)).json({ message });
 
   const { password: _, ...userWithoutPassword } = message.dataValues;
@@ -35,17 +33,13 @@ const getAll = async (_req, res) => {
 };
 
 const getById = async (req, res) => {
-  const { id } = req.params;
-
-  const { type, message } = await userService.getById(id);
+  const { type, message } = await userService.getById(req.params.id);
   
   return responseForClient(type, message, res, sucessfulResponse.OK);
 };
 
 const deleteUser = async (req, res) => {
-  const userId = req.user.id;
-
-  const { type, message } = await userService.deleteUser(userId);
+  const { type, message } = await userService.deleteUser(req.user.id);
   
   return responseForClient(type, message, res, sucessfulResponse.NO_CONTENT);
 };

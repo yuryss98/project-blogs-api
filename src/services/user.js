@@ -2,7 +2,7 @@ const { User } = require('../models');
 const validateInputValues = require('./validations/validateInputsValue');
 const { SERVICE_SUCESSFULL, UNSUCCESSFUL_SERVICE } = require('./helpers');
 
-const login = async (email, password) => {
+const login = async ({ email, password }) => {
   try {
     const { type, message } = validateInputValues.login(email, password);
     if (type) return { type, message };
