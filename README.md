@@ -61,10 +61,39 @@ Abra O terminal e execute os comandos:
   <details close>
   <summary>POST /login</summary>
   
+  -- O método POST em /login quando executado com um email e senha que contem no banco de dados retorna um token, token esse que é usado para poder acessar outras rotas da api, aceita 2 campos sendo eles:
+  
+  -- email: campo do tipo texto, tem que ser um email no formato valido exemplo => "lewishamilton@gmail.com" - CAMPO OBRIGATORIO;
+  
+  -- password: campo do tipo texto, tem que ser de no minimo 6 caracters exemplo => "123456" - CAMPO OBRIGATORIO;
+  
   ```json
       {
         "email": "lewishamilton@gmail.com",
         "password": "123456"
+      }
+  ```
+  
+  </details>
+  
+  <details close>
+  <summary>POST /user</summary>
+  -- O método POST em /user é usado para criar um usuario, quando criado com sucesso retorna um token, token esse que é usado para poder acessar outras    rotas da api, aceita 4 campos sendo eles:
+  
+    -- displayName: campo do tipo texto de no minimo 8 caracters - CAMPO OBRIGATORIO;
+    
+    -- email: campo do tipo texto, tem que ser um email no formato valido => exemplo@exemplo.com - CAMPO OBRIGATORIO;
+    
+    -- password: campo do tipo texto de no minimo 6 caracters - CAMPO OBRIGATORIO;
+    
+    -- image: campo do tipo texto, aqui pode colocar a url de alguma imagem - CAMPO NÃO OBRIGATORIO;
+  
+  ```json
+      {
+        "displayName": "testando",
+        "email": "teste@teste.com",
+        "password": "123456",
+        image: ""
       }
   ```
   
