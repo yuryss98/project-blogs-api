@@ -61,7 +61,7 @@ Abra O terminal e execute os comandos:
   <details close>
   <summary>POST /login</summary>
   
-  -- O método POST em /login quando executado com um email e senha que contem no banco de dados retorna um token, token esse que é usado para poder acessar outras rotas da api, aceita 2 campos sendo eles:
+  -- O método POST em /login quando executado com um email e senha corretos retorna um token, token esse que é usado para poder acessar outras rotas da api, aceita 2 campos sendo eles:
   
   -- email: campo do tipo texto, tem que ser um email no formato valido exemplo => "lewishamilton@gmail.com" - CAMPO OBRIGATORIO;
   
