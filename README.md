@@ -97,7 +97,6 @@ Abra O terminal e execute os comandos:
         "displayName": "testando",
         "email": "teste@teste.com",
         "password": "123456",
-        image: ""
       }
   ```
   
