@@ -51,7 +51,11 @@ Abra O terminal e execute os comandos:
 ```
 
 ```bash
--- npm start
+-- npm run db
+```
+
+```bash
+-- npm run start
 ```
 
 ## Depois de executar todos os comandos, ja teremos uma aplicação rodando na porta 3000, e um banco de dados criado e populado, com isso estamos prontos para consumir os devidos endpoints!!
@@ -199,7 +203,7 @@ Abra O terminal e execute os comandos:
   ```json
       {
         "title": "atualizando o post",
-        "content": "post devidamente atualizado",
+        "content": "post devidamente atualizado"
       }
   ```
   
