@@ -2,7 +2,7 @@
 
 ---
 
-Neste projeto tive que desenvolver uma API e um banco de dados para a produção de conteúdo para um blog!
+Neste projeto, desenvolvi uma API e um banco de dados para a produção de conteúdo para um blog!
 
 A aplicação foi desenvolvida em Node.js usando o pacote sequelize para fazer um CRUD de posts;
 
