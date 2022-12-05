@@ -156,11 +156,11 @@ npm run start
   
   <details close>
   <summary>GET /post/search</summary>
-  -- O método GET em /post/search é usado listar todos os posts que contenham em title ou content a palavra pesquisada na query;
+  -- O método GET em /post/search é usado listar todos os posts que contenham em title ou content a palavra pesquisada na query.
   
   EXEMPLO:
   
-  http://localhost:3000/post/search?q=vamos que vamos
+    http://localhost:3000/post/search?q=vamos que vamos
   
   </details>
   
