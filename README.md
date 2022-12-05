@@ -24,38 +24,38 @@ Desenvolvi endpoints que estão conectados ao banco de dados seguindo os princí
 
 Clone o projeto
 ```bash
-  git@github.com:yuryss98/project-blogs-api.git
+git clone git@github.com:yuryss98/project-blogs-api.git
 ```
 
 Vá para o diretório do projeto:
 ```bash
-  cd project-blogs-api
+cd project-blogs-api
 ```
 
 Entre no Vs Code para verificar os arquivos usando o atalho no terminal:
 ```bash
-  code .
+code .
 ```
 
 Abra O terminal e execute os comandos:
 ```bash
--- docker-compose up -d --build
+docker-compose up -d --build
 ```
 
 ```bash  
--- docker exec -it blogs_api bash
+docker exec -it blogs_api bash
 ```
 
 ```bash
--- npm install
+npm install
 ```
 
 ```bash
--- npm run db
+npm run db
 ```
 
 ```bash
--- npm run start
+npm run start
 ```
 
 ## Depois de executar todos os comandos, ja teremos uma aplicação rodando na porta 3000, e um banco de dados criado e populado, com isso estamos prontos para consumir os devidos endpoints!!
