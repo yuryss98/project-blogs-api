@@ -60,6 +60,8 @@ npm run start
 
 ## Depois de executar todos os comandos, ja teremos uma aplicação rodando na porta 3000, e um banco de dados criado e populado, com isso estamos prontos para consumir os devidos endpoints!!
 
+<img src="./docs/docs.gif" alt="giff"/>
+
 ## Endpoints: todos os endpoints são acessiveis a partir da rota http://localhost:3000
   
   <details close>
