@@ -32,12 +32,7 @@ Vá para o diretório do projeto:
 cd project-blogs-api
 ```
 
-Entre no Vs Code para verificar os arquivos usando o atalho no terminal:
-```bash
-code .
-```
-
-Abra O terminal e execute os comandos:
+Execute os seguintes comandos:
 ```bash
 docker-compose up -d --build
 ```
