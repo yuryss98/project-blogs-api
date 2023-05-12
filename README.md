@@ -20,7 +20,7 @@ Desenvolvi endpoints que estão conectados ao banco de dados seguindo os princí
 * Mysql;
 * Sequelize
 
-## Execute localmente:
+## Execute localmente (é preciso ter o docker instalado):
 
 Clone o projeto
 ```bash
